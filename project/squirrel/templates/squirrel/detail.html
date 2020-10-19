@@ -1,10 +1,21 @@
 <html>
 	<body>
-		<pre>Latitude: {{ squirrel.Latitude }}</pre>
-		<pre>Longitude: {{ squirrel.Longitude }}</pre>
-		<pre>Unique Squirrel ID: {{ squirrel.Unique_ID }}</pre>
-		<pre>Shift: {{ squirrel.Shift }}</pre>
-		<pre>Date: {{ squirrel.Date }}</pre>
-		<pre>Age: {{ squirrel.Age }}</pre>
+		<form id="submit" method="post" enctype="multipart/form-data" action=" {%url 'squirrel:update' squirrel.id %}">
+		{% csrf_token %}
+		<label>Latitude:</label>
+		<input type="text" value="{{squirrel.Latitude}}"><input type="hidden" value="{{ squirrel.id }}"><br>
+		<label>Longitude:</label>
+                <input type="text" value="{{squirrel.Longitude}}"><input type="hidden" value="{{ squirrel.id }}"><br>
+		<label>Unique Squirrel ID:</label>
+                <input type="text" value="{{squirrel.Unique_ID}}"><input type="hidden" value="{{ squirrel.id }}"><br>
+		<label>Shift:</label>
+                <input type="text" value="{{squirrel.Shift}}"><input type="hidden" value="{{ squirrel.id }}"><br>
+		<label>Date:</label>
+                <input type="text" value="{{squirrel.Date}}"><input type="hidden" value="{{ squirrel.id }}"><br>
+		<label>Age:</label>
+                <input type="text" value="{{squirrel.Age}}"><input type="hidden" value="{{ squirrel.id }}"><br>
+
+		<button type="submit">Update</button>
+		</form>
 	</body>
 </html>

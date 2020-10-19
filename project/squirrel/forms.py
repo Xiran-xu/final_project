@@ -13,4 +13,5 @@ class UpdateForm(ModelForm):
                 'Date',
                 'Age',
         ]
+        extra_kwargs = {'__all__': {'required': False}}
 
