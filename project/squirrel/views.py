@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from forms import UpdateForm
 
 from .models import Squirrel
 
@@ -19,4 +21,16 @@ def detail(request,squirrel_id):
     }
 
     return render(request,'squirrel/detail.html',context)
+
+def update(request):
+
+    if request.method == 'POST':
+        form = UpdateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({})
+        else:
+            return JsonResponse({'errors':form.errors},status=400)
+
+    return JsonResponse({},status=405)
 
