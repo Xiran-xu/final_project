@@ -1,13 +1,14 @@
 <!doctype html>
 <html>
 <body>
-		<ul>
+	<pre><a href="{% url 'squirrel:add'  %}">Add a new squirrel sighting!</a></pre>	
+	<ul>
 		{% for squirrel in squirrels %}
 		<li><pre>{{ squirrel.Unique_ID}}</pre>
 		    <pre>{{ squirrel.Date }}</pre>
-		    <pre><a href="{% url 'squirrel:detail' squirrel.id %}">{{ squirrel.Unique_ID }}</a></pre>
+		    <pre><a href="{% url 'squirrel:update' squirrel.id %}">{{ squirrel.Unique_ID }}</a></pre>
 		</li>
 		{% endfor %}
-		</ul>
-	</body>
+	</ul>
+</body>
 </html>

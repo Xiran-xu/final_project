@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from .forms import UpdateForm
@@ -13,24 +13,33 @@ def index(request):
 
     return render(request,'squirrel/index.html',context)
 
-def detail(request,squirrel_id):
-    squirrel =get_object_or_404(Squirrel, pk=squirrel_id)
-
-    context ={
-            'squirrel':squirrel,
-    }
-
-    return render(request,'squirrel/detail.html',context)
-
 def update(request,squirrel_id):
     
     if request.method == 'POST':
-        form = UpdateForm(request.POST or None)
+        squirrel=get_object_or_404(Squirrel,pk=squirrel_id)
+        form = UpdateForm(request.POST, instance=squirrel)
+        if form.is_valid():
+            squirrel.save()
+            return redirect('/sightings/')
+    
+    squirrel=get_object_or_404(Squirrel,pk=squirrel_id)
+    form = UpdateForm(instance=squirrel)
+    context ={
+            'form':form,
+    }
+
+    return render(request,'squirrel/update.html',context)
+
+def add(request):
+    if request.method == 'POST':
+        form = UpdateForm(request.POST)
         if form.is_valid():
             form.save()
-            return JsonResponse({})
-        else:
-            return JsonResponse({'errors':form.errors},status=400)
+            return redirect('/sightings/')
+    
+    form = UpdateForm()
+    context ={
+            'form':form,
+    }
 
-    return JsonResponse({},status=405)
-
+    return render(request,'squirrel/add.html',context)
